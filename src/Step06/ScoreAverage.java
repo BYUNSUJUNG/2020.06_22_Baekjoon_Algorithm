@@ -1,7 +1,15 @@
-// https://www.acmicpc.net/board/view/22366
-// 40.000%를 출력해야 하는데 40%, 40.0%, 40.000, 40.000 % 등을 출력하면 오답입니다
+// 주의할 부분
+
+// 1. 	40.000%를 출력해야 하는데 40%, 40.0%, 40.000, 40.000 % 등을 출력하면 오답
+
+// 2.
+// 		1
+// 		5 0 0 0 0 0를 입력했을 때
+// 		0.000%가 나와야한다.
+
 package Step06;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class ScoreAverage {
@@ -14,6 +22,10 @@ public class ScoreAverage {
 	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
+		DecimalFormat df = new DecimalFormat("#0.000%");
+		// 0: 빈자리는 0으로 채운다.
+		// #: 빈자리를 채우지 않는다.
+		
 		int iInput = scan.nextInt(); // 프로그램 총 반복 횟수
 		int iScoreCnt; // 점수 개수
 		int[] iScore; // 점수 배열
@@ -46,9 +58,7 @@ public class ScoreAverage {
 					dAboveAverage++;
 				}
 			}
-			dAboveAverage=dAboveAverage/iScore.length;
-			System.out.println(Math.round(dAboveAverage*100000)/1000.0+"%");
-			
+			System.out.println(df.format(dAboveAverage/iScore.length));
 		}
 
 	}
