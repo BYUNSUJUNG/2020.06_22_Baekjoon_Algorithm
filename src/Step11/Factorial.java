@@ -19,7 +19,6 @@ public class Factorial {
 		}
 		
 		
-			
 		// 	5 * factorialMethod(iNum-1) 
 		//		4 * factorialMethod(iNum-1)
 		//			3 * factorialMethod(iNum-1)
