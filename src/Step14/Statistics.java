@@ -1,5 +1,7 @@
 package Step14;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Statistics {
@@ -18,8 +20,8 @@ public class Statistics {
 		int iMedian; // 중앙값
 		int iMode = 0; // 최빈값
 		
-		int[] iIndex = new int[iCnt]; //인덱스의 카운터
-		int iMax = Integer.MIN_VALUE; //최대값을 저장하기위한 변수 
+		int[] iIndex = new int[8001]; //인덱스의 카운터
+		ArrayList iMaxList = new ArrayList();
 		
 		int iMaxNum; // 최댓값
 		int iMinNum; // 최솟값
@@ -38,22 +40,55 @@ public class Statistics {
         int size = iNum.length;
 
         iMedian = iNum[size / 2];
-/*
- * 음수일 경우 index값으로 못들어감 - > 에러
- * 
- * 
-        // 3. 최빈값 구하기
 
+       
+        // 3. 최빈값 구하기
+        
+        // (1) 음수일 경우 index값으로 못들어감 - > 에러
+        // 해결: 입력되는 정수값의 절댓값이 최대 4000이기에,
+        // 음수 일 경우 4000 초과의 index값을 넣어주면
+        // 양수와 겹칠 일이 없다
+        
+        // (2) 최빈값이 여러개일 경우
+        
+        
+        // 각 빈도 
         for (int i = 0; i < iNum.length; i++) {
-            iIndex[iNum[i]]++; //COUNT          
+        	if(iNum[i]<0) { // 음수일 경우
+        	 iIndex[(-iNum[i])+4000]++; //COUNT   
+        	} else {
+        	 iIndex[iNum[i]]++; //COUNT   
+        	}
+                  
         }
         for (int i=0; i< iIndex.length; i++){
-            if(iMax<iIndex[i]){
-                iMax = iIndex[i]; //MAX
-                iMode = i; //최빈값 : MODE
+            if(iMode<iIndex[i]){
+                iMode = iIndex[i]; // iMode: 최빈수
+                
             }          
         }      
-        */
+        
+        if(iMode>4000) { // 음수일 경우, index가 4000이상이기에 -4000
+        	iMode = -(iMode - 4000);
+        }
+        
+		iMaxList.add(iNum[iMode]); // 최빈수에 해당하는 숫자
+		/*
+        // 최빈값이 여러개일 경우 찾기
+        for (int j = 0; j < iIndex.length; j++) {
+        	if(iMode==iIndex[j]) {
+        		if() {
+        			(!iMaxList.contains(iNum[j]))) {
+                		iMaxList.add(iNum[j]);
+        		}
+        	}
+		}*/
+        if(iMaxList.size()>1) {
+        	Collections.sort(iMaxList);
+        	iMode = (int) iMaxList.get(1);
+        }
+        
+        
         // 4. 최솟값, 최댓값 차이 구하기
         iMaxNum = iNum[iCnt-1];
         iMinNum = iNum[0];
